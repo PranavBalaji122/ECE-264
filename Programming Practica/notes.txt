@@ -1,0 +1,136 @@
+
+Open a file for reading
+FILE *fp = fopen("file.txt", "r");  // Open a file for reading
+if (fp == NULL) {
+    printf("Error opening file");
+    return -1;
+}
+// Operations on the file
+fclose(fp);  // Close the file
+
+
+fscanf: This function reads formatted input from a file. It is used to read data types 
+formatted as strings, integers, floating-point numbers, etc., from a file. fscanf works 
+similarly to scanf but takes a FILE* pointer as its first argument to specify the file f
+rom which to read.
+
+#include <stdio.h>
+
+int main() {
+    FILE *fp = fopen("data.txt", "r");
+    if (fp == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    int num;
+    while (fscanf(fp, "%d", &num) == 1) {  // Read integers until EOF
+        printf("%d\n", num);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+
+fread: This function reads raw binary data from a file. It is used for reading blocks 
+of data regardless of type. fread takes a buffer, its size, the number of elements to 
+read, and a FILE* pointer to specify the file. It is used when you need to read a specific 
+number of bytes directly from a file, without any formatting.
+#include <stdio.h>
+
+fread returns the number of elements read
+
+typedef struct {
+    int id;
+    float salary;
+} Employee;
+
+int main() {
+    FILE *fp = fopen("binary.bin", "rb)
+    if (fp == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    Employee emp;
+    while (fread(&emp, sizeof(Employee), 1, fp) == 1) {  // Read struct data
+        printf("ID: %d, Salary: %.2f\n", emp.id, emp.salary);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+
+The fgetc function in C is used to read a single character from a file. It takes a 
+FILE* pointer as its argument, which points to the file you want to read from. fgetc 
+reads the next character and advances the file position indicator. If successful, it 
+returns the character read as an unsigned char cast to an int. If the end of the file 
+is reached or an error occurs, it returns EOF (end of file).
+#include <stdio.h>
+
+int main() {
+    FILE *fp = fopen("text.txt", "r");
+    if (fp == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    int ch;
+    while ((ch = fgetc(fp)) != EOF) {  // Read characters until EOF
+        putchar(ch);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+
+
+
+
+Fprintf Use fprintf when you need formatted human-readable output (like logs, reports, CSV).
+
+
+#include <stdio.h>
+
+int main() {
+    FILE *fp = fopen("text.txt", "w");
+    if (fp == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    int id = 101;
+    float price = 9.99;
+    fprintf(fp, "ID: %d, Price: %.2f\n", id, price);  // Writing formatted text
+
+    fclose(fp);
+    return 0;
+}
+
+
+fwrite Use fwrite when writing raw data for efficient storage (like images, structs, or serialized data).
+
+
+#include <stdio.h>
+
+typedef struct {
+    int id;
+    float price;
+} Product;
+
+int main() {
+    FILE *fp = fopen("binary.bin", "wb");
+    if (fp == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    Product p = {101, 9.99};
+    fwrite(&p, sizeof(Product), 1, fp);  // Writing struct in binary format
+
+    fclose(fp);
+    return 0;
+}
