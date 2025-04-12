@@ -56,7 +56,7 @@ int number_of_moves(struct game_state start) {
             if (finished) {
                 free_list(visited);
                 free_list(q.data);
-                return cur.num_steps;
+                return cur.num_steps; 
             }
 
 
