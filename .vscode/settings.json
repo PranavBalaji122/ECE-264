@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdlib.h": "c",
-        "binary_tree.h": "c"
+        "binary_tree.h": "c",
+        "stdio.h": "c"
     }
 }
