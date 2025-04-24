@@ -1,27 +1,22 @@
-# ***
-# *** Do NOT modify this file
-# ***
+# Makefile
 
-WARNING = -Wall -Wshadow --pedantic
-ERROR = -Wvla -Werror
-GCC = gcc -std=c11 -g $(WARNING) $(ERROR) 
+CC       := gcc
+CFLAGS   := -std=c11 -g -Wall -Wshadow -pedantic -Wvla -Werror
 
-SRCS = practica_c.c
-OBJS = $(SRCS:%.c=%.o) main_c.o
+SRCS     := main.c practica_c.c
+OBJS     := $(SRCS:.c=.o)
+TARGET   := practica
 
-%.o: %.c
-	$(GCC) -c $< -o $@
+all: $(TARGET)
 
-practica: $(OBJS) 
-	$(GCC) $(OBJS) -o practica
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
 
-testall: test1 test2 test3 test4 test5 test6 test7 test8 test9 test10
+main.o: main.c practica_c.h
+	$(CC) $(CFLAGS) -c main.c
 
-test%: practica
-	./practica $@
-
-leak: practica
-	valgrind --leak-check=full --show-leak-kinds=all ./practica test8
+practica_c.o: practica_c.c practica_c.h
+	$(CC) $(CFLAGS) -c practica_c.c
 
 clean:
-	rm -rf practica_c.o practica
+	rm -f $(OBJS) $(TARGET)
